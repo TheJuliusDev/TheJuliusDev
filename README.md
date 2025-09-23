@@ -1,16 +1,41 @@
-## Hi there 👋
+# Hi there 👋, I'm Julius Ayodeji  
 
-<!--
-**TheJuliusDev/TheJuliusDev** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+🚀 **16 y/o Web Developer & Co-founder of [WEBROS](https://github.com/WEBROS)**  
+💻 Exploring **Web Development, Data Science & Freelancing**  
+🎯 Passionate about building real-world projects and turning ideas into reality  
 
-Here are some ideas to get you started:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 🛠️ Tech Stack
+- **Frontend:** HTML, CSS, JavaScript, Tailwind CSS, React  
+- **Backend & Auth:** Firebase, Supabase  
+- **Data Science:** Python, Pandas, NumPy, Jupyter  
+- **Tools:** Git, GitHub, VS Code, Figma, Canva  
+
+---
+
+## 📈 GitHub Stats
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=TheJuliusDev&show_icons=true&theme=radical)  
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=TheJuliusDev&layout=compact&theme=radical)  
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=TheJuliusDev&theme=radical)  
+
+---
+
+## 🚀 Featured Projects
+- 🌐 **[WEBROS Official Website](https://github.com/WEBROS)** — Smooth, animated & professional site for our brand  
+- 💰 **Equitas Fintech App** — Dark-themed BTC/NGN trading frontend with APIs  
+- 🎓 **Diamond Scholars Academy** — Full professional school website  
+- 📊 **Data Science Projects** — Hands-on experiments with Python & data  
+
+---
+
+## 🌐 Connect with me  
+[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/TheJuliusDev)  
+[![Threads](https://img.shields.io/badge/Threads-000000?style=for-the-badge&logo=threads&logoColor=white)](https://www.threads.net/@thejuliusdev)  
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/TheJuliusDev)  
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/2348150481672)  
+[![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/share/1ZLMnu2bBB/)  
+[![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/users/1353496512797347862)  
+---
+
+✨ *“Still learning, still building, still growing — one project at a time.”*  
