@@ -1,6 +1,6 @@
 # Hi there 👋, I'm Julius Ayodeji  
 
-🚀 **16 y/o Web Developer & Co-founder of [WEBROS](https://github.com/WEBROS)**  
+🚀 **16 y/o Web Developer** 
 💻 Exploring **Web Development, Data Science & Freelancing**  
 🎯 Passionate about building real-world projects and turning ideas into reality  
 
@@ -22,9 +22,8 @@
 ---
 
 ## 🚀 Featured Projects
-- 🌐 **[WEBROS Official Website](https://github.com/WEBROS)** — Smooth, animated & professional site for our brand  
 - 💰 **Equitas Fintech App** — Dark-themed BTC/NGN trading frontend with APIs  
-- 🎓 **Diamond Scholars Academy** — Full professional school website  
+- 🎓 **Quantum Leap Comprehensive School** — Full professional school website  
 - 📊 **Data Science Projects** — Hands-on experiments with Python & data  
 
 ---
