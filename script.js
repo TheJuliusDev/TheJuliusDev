@@ -356,3 +356,72 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('loading');
     }, 3000);
 });
+// Add these to your DOMContentLoaded listener
+document.addEventListener('DOMContentLoaded', function() {
+    // ... your existing init calls
+    initMiniGame();
+});
+
+function initMiniGame() {
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+    const maxAttempts = 7;
+
+    const input = document.getElementById('guessInput');
+    const btn = document.getElementById('guessBtn');
+    const status = document.getElementById('gameStatus');
+    const countDisplay = document.getElementById('attemptCount');
+    const history = document.getElementById('guessHistory');
+    const resetBtn = document.getElementById('resetGame');
+
+    function checkGuess() {
+        const userGuess = parseInt(input.value);
+        if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+            status.textContent = "Please enter a valid number (1-100)!";
+            return;
+        }
+
+        attempts++;
+        countDisplay.textContent = attempts;
+        
+        // Add to history
+        const item = document.createElement('span');
+        item.className = 'history-item';
+        item.textContent = userGuess;
+        history.appendChild(item);
+
+        if (userGuess === randomNumber) {
+            status.textContent = "🎉 Correct! You're a genius!";
+            status.style.color = "var(--primary)";
+            btn.disabled = true;
+        } else if (attempts >= maxAttempts) {
+            status.textContent = `Game Over! The number was ${randomNumber}.`;
+            btn.disabled = true;
+        } else {
+            status.textContent = userGuess > randomNumber ? "Too high! Try again." : "Too low! Try again.";
+            input.value = '';
+            input.focus();
+        }
+    }
+
+    btn.addEventListener('click', checkGuess);
+    resetBtn.addEventListener('click', () => {
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+        attempts = 0;
+        input.value = '';
+        status.textContent = "Enter a number to start!";
+        status.style.color = "var(--foreground)";
+        countDisplay.textContent = "0";
+        history.innerHTML = '';
+        btn.disabled = false;
+    });
+}
+let input = '';
+document.addEventListener('keydown', (e) => {
+    input += e.key;
+    if (input.includes('webros')) {
+        // Logic to launch a secret terminal overlay
+        showToast('Secret Terminal Unlocked!', 'success');
+        input = '';
+    }
+});

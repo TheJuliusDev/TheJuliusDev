@@ -1876,3 +1876,91 @@ body {
     transform: translateY(0);
   }
 }
+/* Game Section Styles */
+.game {
+  padding: 8rem 0;
+  background-color: var(--background-secondary);
+}
+
+.game-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.game-card {
+  background: var(--card-gradient);
+  border: 1px solid var(--card-border);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: var(--glow-blue);
+}
+
+.game-status {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--foreground);
+  min-height: 3rem;
+}
+
+.game-input-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#guessInput {
+  flex: 1;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  color: var(--foreground);
+  font-size: 1.5rem;
+  text-align: center;
+  outline: none;
+}
+
+#guessInput:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 2px hsl(207, 90%, 54%, 0.2);
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  color: var(--muted-foreground);
+}
+
+.history-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.history-item {
+  background: var(--muted);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+/* Style.css */
+.highlight-link {
+    text-decoration: none; /* Removes the default underline */
+    display: inline-block;
+    transition: var(--transition-bounce);
+}
+
+.highlight-link:hover {
+    transform: translateY(-2px) scale(1.05); /* Adds a subtle "pop" on hover */
+}
+
+/* Ensure the highlight color stays the same */
+.highlight-link .highlight {
+    cursor: pointer;
+}
