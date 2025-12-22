@@ -9,9 +9,7 @@ const contactForm = document.getElementById('contactForm');
 const toast = document.getElementById('toast');
 const currentYearSpan = document.getElementById('currentYear');
 
-
 let isMenuOpen = false;
-
 
 document.addEventListener('DOMContentLoaded', function() {
     initPreloader();
@@ -20,8 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
     initContactForm();
     updateCurrentYear();
     initWhatsAppTooltip();
+    initMiniGame();
+    addHoverEffects();
+    initLazyLoading();
+    initPerformanceMonitoring();
+    initThemeHandling();
 });
-
 
 function initPreloader() {
     let progress = 0;
@@ -42,7 +44,6 @@ function initPreloader() {
     }, 50);
 }
 
-
 function initNavigation() {
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -61,7 +62,6 @@ function initNavigation() {
         }
     });
 
-    
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && isMenuOpen) {
             closeMobileMenu();
@@ -99,7 +99,6 @@ function scrollToTop() {
     });
 }
 
-
 function initScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -114,7 +113,6 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    
     const animatedElements = document.querySelectorAll('.project-card, .service-card, .skill-category');
     animatedElements.forEach((el, index) => {
         el.style.animationDelay = `${index * 0.1}s`;
@@ -123,54 +121,86 @@ function initScrollAnimations() {
 }
 
 function initContactForm() {
-    contactForm.addEventListener('submit', handleFormSubmit);
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleFormSubmit);
+    }
 }
 
-function handleFormSubmit(e) {
+// --- UPDATED: Actual Formspree Integration ---
+async function handleFormSubmit(e) {
     e.preventDefault();
     
-    
-    const formData = new FormData(contactForm);
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        message: formData.get('message')
-    };
-
-    
-    if (!data.name || !data.email || !data.message) {
-        showToast('Please fill in all required fields', 'error');
+    if (!navigator.onLine) {
+        showToast('Cannot send message. Please check your internet connection.', 'error');
         return;
     }
 
+    const formData = new FormData(contactForm);
+    const btn = contactForm.querySelector('button[type="submit"]');
     
-    showToast('Message sent successfully!', 'success');
-    
-    contactForm.reset();
+    // UI Loading State
+    const originalBtnText = btn.innerHTML;
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+        const response = await fetch("https://formspree.io/f/xvgzlowq", {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            // Show your custom professional overlay
+            showSuccessOverlay();
+            contactForm.reset();
+        } else {
+            const data = await response.json();
+            showToast(data.errors ? data.errors[0].message : "Submission failed", 'error');
+        }
+    } catch (error) {
+        showToast("Connection error. Please try again later.", 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalBtnText;
+    }
 }
 
+function showSuccessOverlay() {
+    const overlay = document.getElementById('successOverlay');
+    if (overlay) {
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; 
+    }
+}
+
+window.closeSuccessOverlay = function() {
+    const overlay = document.getElementById('successOverlay');
+    if (overlay) {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+};
 
 function showToast(message, type = 'success') {
-    const toastTitle = toast.querySelector('.toast-title');
-    const toastDescription = toast.querySelector('.toast-description');
-    const toastIcon = toast.querySelector('.toast-icon');
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+
+    const title = toast.querySelector('.toast-title');
+    const desc = toast.querySelector('.toast-description');
     
-    if (type === 'success') {
-        toastTitle.textContent = 'Message sent!';
-        toastDescription.textContent = "Thank you for reaching out. I'll get back to you soon.";
-        toastIcon.textContent = '✓';
-        toastIcon.style.backgroundColor = '#10b981';
-    } else {
-        toastTitle.textContent = 'Error';
-        toastDescription.textContent = message;
-        toastIcon.textContent = '!';
-        toastIcon.style.backgroundColor = '#ef4444';
-    }
+    toast.className = `toast ${type}`; 
+    title.textContent = type === 'error' ? 'Oops!' : 'Success';
+    desc.textContent = message;
     
+    toast.classList.remove('hidden');
     toast.classList.add('show');
     
     setTimeout(() => {
         toast.classList.remove('show');
+        setTimeout(() => toast.classList.add('hidden'), 300);
     }, 4000);
 }
 
@@ -191,176 +221,11 @@ function initWhatsAppTooltip() {
     }
 }
 
-
 function updateCurrentYear() {
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 }
-
-
-document.addEventListener('keydown', (e) => {
-    
-    if (e.key === 'Home') {
-        e.preventDefault();
-        scrollToTop();
-    }
-    
-    
-    if (e.key === 'End') {
-        e.preventDefault();
-        window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: 'smooth'
-        });
-    }
-});
-
-function initLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-}
-
-
-function initPerformanceMonitoring() {
-    // Monitor Core Web Vitals
-    if ('web-vital' in window) {
-        // This would be implemented with a library like web-vitals
-        console.log('Performance monitoring initialized');
-    }
-}
-
-// Error handling
-window.addEventListener('error', (e) => {
-    console.error('JavaScript error:', e.error);
-    // In production, you might want to send this to an error tracking service
-});
-
-// Unhandled promise rejection handling
-window.addEventListener('unhandledrejection', (e) => {
-    console.error('Unhandled promise rejection:', e.reason);
-    // In production, you might want to send this to an error tracking service
-});
-
-// Expose global functions for HTML onclick events
-window.scrollToSection = scrollToSection;
-window.scrollToTop = scrollToTop;
-
-// Additional animations and interactions
-function addHoverEffects() {
-    // Add hover effects to project cards
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'scale(1.05)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'scale(1)';
-        });
-    });
-    
-    // Add hover effects to service cards
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'scale(1.05)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'scale(1)';
-        });
-    });
-}
-
-// Initialize additional features when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    addHoverEffects();
-    initLazyLoading();
-    initPerformanceMonitoring();
-});
-
-// Smooth reveal animations for sections
-function revealOnScroll() {
-    const reveals = document.querySelectorAll('.animate-on-scroll');
-    
-    reveals.forEach(element => {
-        const windowHeight = window.innerHeight;
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < windowHeight - elementVisible) {
-            element.classList.add('active');
-        }
-    });
-}
-
-window.addEventListener('scroll', revealOnScroll);
-
-// Initialize theme handling (if needed in the future)
-function initThemeHandling() {
-    // Check for saved theme preference or default to dark
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-}
-
-// Copy email to clipboard functionality
-function copyToClipboard(text) {
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(() => {
-            showToast('Email copied to clipboard!', 'success');
-        });
-    } else {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        showToast('Email copied to clipboard!', 'success');
-    }
-}
-
-// Add click handlers for email addresses
-document.addEventListener('DOMContentLoaded', () => {
-    const emailElements = document.querySelectorAll('[data-email]');
-    emailElements.forEach(element => {
-        element.addEventListener('click', (e) => {
-            e.preventDefault();
-            copyToClipboard(element.dataset.email || 'julius@webros.dev');
-        });
-    });
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    initThemeHandling();
-    
-    
-    document.body.classList.add('loading');
-    
-       setTimeout(() => {
-        document.body.classList.remove('loading');
-    }, 3000);
-});
-// Add these to your DOMContentLoaded listener
-document.addEventListener('DOMContentLoaded', function() {
-    // ... your existing init calls
-    initMiniGame();
-});
 
 function initMiniGame() {
     let randomNumber = Math.floor(Math.random() * 100) + 1;
@@ -374,7 +239,9 @@ function initMiniGame() {
     const history = document.getElementById('guessHistory');
     const resetBtn = document.getElementById('resetGame');
 
-    function checkGuess() {
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
         const userGuess = parseInt(input.value);
         if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
             status.textContent = "Please enter a valid number (1-100)!";
@@ -384,7 +251,6 @@ function initMiniGame() {
         attempts++;
         countDisplay.textContent = attempts;
         
-        // Add to history
         const item = document.createElement('span');
         item.className = 'history-item';
         item.textContent = userGuess;
@@ -402,9 +268,8 @@ function initMiniGame() {
             input.value = '';
             input.focus();
         }
-    }
+    });
 
-    btn.addEventListener('click', checkGuess);
     resetBtn.addEventListener('click', () => {
         randomNumber = Math.floor(Math.random() * 100) + 1;
         attempts = 0;
@@ -416,12 +281,54 @@ function initMiniGame() {
         btn.disabled = false;
     });
 }
-let input = '';
-document.addEventListener('keydown', (e) => {
-    input += e.key;
-    if (input.includes('webros')) {
-        // Logic to launch a secret terminal overlay
-        showToast('Secret Terminal Unlocked!', 'success');
-        input = '';
-    }
-});
+
+function addHoverEffects() {
+    const cards = document.querySelectorAll('.project-card, .service-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', () => card.style.transform = 'scale(1.02)');
+        card.addEventListener('mouseleave', () => card.style.transform = 'scale(1)');
+    });
+}
+
+function initLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    images.forEach(img => imageObserver.observe(img));
+}
+
+function initThemeHandling() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+}
+
+function initPerformanceMonitoring() {
+    console.log('Performance monitoring active');
+}
+
+// Global Exports
+window.scrollToSection = scrollToSection;
+window.scrollToTop = scrollToTop;
+// script.js
+function initThemeHandling() {
+    const themeToggle = document.getElementById('themeToggle');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+
+    // Apply initial theme
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        let newTheme = theme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+}
