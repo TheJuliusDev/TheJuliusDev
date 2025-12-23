@@ -349,3 +349,4 @@ function initThemeHandling() {
   ],
   "description": "I'm Julius Ayodeji, a Fullstack web developer, Data Scientist I attend Fedral University of Akure(FUTA)."
 }
+</script>
