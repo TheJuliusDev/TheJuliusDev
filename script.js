@@ -332,3 +332,20 @@ function initThemeHandling() {
         localStorage.setItem('theme', newTheme);
     });
 }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Julius Ayodeji",
+  "url": "https://thejuliusdevofficial.vercel.app/",
+  "image": "https://your-portfolio-url.vercel.app/favicon.ico",
+  "jobTitle": "Fullstack Web developer, Web designer, blockchain developer, Data Scientist",
+  "sameAs": [
+    "https://www.linkedin.com/in/julius-ayodeji-640710386?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    "https://github.com/TheJuliusDev",
+    "https://x.com/TheJuliusDev?t=YIeGue_giiYEoNUyYC6H7w&s=09",
+    "https://www.threads.com/@thejuliusdev",
+    "https://www.instagram.com/thejuliusdev"
+  ],
+  "description": "I'm Julius Ayodeji, a Fullstack web developer, Data Scientist I attend Fedral University of Akure(FUTA)."
+}
