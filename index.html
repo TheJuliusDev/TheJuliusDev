@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Julius Ayodeji (TheJuliusDev) - Full Stack Developer, Founder of Payric, AI Builder from Ibadan, Nigeria." />
+  <meta name="theme-color" content="#0a0a0f" />
+  <title>TheJuliusDev — Julius Ayodeji</title>
+  <!-- Favicon (generated via favicon.io) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Loader -->
+  <div id="loader" role="status" aria-label="Loading TheJuliusDev">
+    <div class="loader-inner">
+      <div class="loader-logo">TJD</div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+      <div class="loader-text">Initializing Universe...</div>
+      <div class="loader-stuck" id="loaderStuck">
+        <p>Taking longer than usual?</p>
+        <button type="button" id="loaderReloadBtn" class="loader-reload-btn">Reload page</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Independent of the main module bundle on purpose: if the bundle is slow
+    // to download/parse on a weak connection, this still lets people recover
+    // instead of staring at a blank/loading screen forever.
+    (function () {
+      var STUCK_AFTER_MS = 10000;
+      var timer = setTimeout(function () {
+        var loader = document.getElementById('loader');
+        if (loader && !loader.classList.contains('hidden')) {
+          loader.classList.add('stuck');
+        }
+      }, STUCK_AFTER_MS);
+      document.addEventListener('DOMContentLoaded', function () {
+        var btn = document.getElementById('loaderReloadBtn');
+        if (btn) btn.addEventListener('click', function () { location.reload(); });
+      });
+      // If the app finishes initializing, no need to keep the timer alive.
+      var clearWatchdog = function () { clearTimeout(timer); };
+      window.addEventListener('tjd:loaded', clearWatchdog);
+    })();
+  </script>
+
+
+  <!-- Nav -->
+  <nav id="nav" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo" aria-label="TheJuliusDev home">
+      <span class="logo-tjd">TJD</span>
+    </a>
+    <div class="nav-links" role="list">
+      <a href="#about" role="listitem">About</a>
+      <a href="#skills" role="listitem">Skills</a>
+      <a href="#projects" role="listitem">Projects</a>
+      <a href="#ai-lab" role="listitem">AI Lab</a>
+      <a href="#contact" role="listitem">Contact</a>
+    </div>
+    <!-- Theme toggle -->
+    <button class="nav-theme-btn" id="themeToggle" aria-label="Toggle light/dark mode">
+      <span class="theme-icon theme-icon--dark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </span>
+      <span class="theme-icon theme-icon--light">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </span>
+    </button>
+    <button class="nav-game-btn" id="navGameBtn" aria-label="Play Bug Hunter game">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Play Game
+    </button>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-hidden="true">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#ai-lab">AI Lab</a>
+    <a href="#blog">Journal</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Three.js Canvas -->
+  <canvas id="universe-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="section hero-section" aria-label="Hero">
+    <div class="hero-content">
+      <div class="hero-badge" data-aos>
+        <span class="badge-dot"></span>
+        Available for freelance projects
+      </div>
+      <h1 class="hero-name" data-aos>
+        <span class="name-line">JULIUS</span>
+        <span class="name-line accent-line">AYODEJI</span>
+      </h1>
+      <p class="hero-handle" data-aos>( TheJuliusDev )</p>
+      <div class="hero-roles" data-aos aria-label="Roles">
+        <span class="role-item active">Full Stack Developer</span>
+        <span class="role-sep">·</span>
+        <span class="role-item">Founder of Payric</span>
+        <span class="role-sep">·</span>
+        <span class="role-item">AI Builder</span>
+        <span class="role-sep">·</span>
+        <span class="role-item">Problem Solver</span>
+      </div>
+      <p class="hero-subtitle" data-aos>
+        Building products that solve <em>real problems.</em>
+      </p>
+      <div class="hero-actions" data-aos>
+        <a href="#projects" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8l4 4-4 4M8 12h8"/></svg>
+          Explore Universe
+        </a>
+        <a href="#projects" class="btn btn-ghost">View Projects</a>
+        <button class="btn btn-game" id="heroGameBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Play Mini Game
+        </button>
+      </div>
+    </div>
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section about-section" aria-label="About Julius">
+    <div class="container">
+      <div class="section-label" data-aos>01 / ABOUT</div>
+      <div class="about-grid">
+        <div class="about-text" data-aos>
+          <h2 class="section-title">Building from <span class="gradient-text">curiosity</span></h2>
+          <p>I'm Julius Ayodeji, a self-taught full stack developer from <strong>Ibadan, Nigeria</strong>.</p>
+          <p>I started coding at age 15 out of curiosity and a love for building things. What began as a fascination with how websites worked turned into a relentless drive to ship products that matter.</p>
+          <p>Today, I'm building <strong>Payric</strong> — a finance SaaS designed specifically for Nigerian small businesses and freelancers.</p>
+          <p>I believe in shipping fast, building in public, and creating products that genuinely help people.</p>
+          <div class="about-philosophy">
+            <div class="philosophy-item" data-aos>
+              <span class="phi-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </span>
+              <span>Build fast</span>
+            </div>
+            <div class="philosophy-item" data-aos>
+              <span class="phi-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+              </span>
+              <span>Ship products</span>
+            </div>
+            <div class="philosophy-item" data-aos>
+              <span class="phi-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              </span>
+              <span>Solve real problems</span>
+            </div>
+            <div class="philosophy-item" data-aos>
+              <span class="phi-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </span>
+              <span>Build in public</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-stats" data-aos>
+          <div class="stat-card">
+            <div class="stat-num" data-count="3">0</div>
+            <div class="stat-label">Years Coding</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-count="10">0</div>
+            <div class="stat-label">Projects Built</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-count="1">0</div>
+            <div class="stat-label">SaaS Founded</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" data-count="100">0</div>
+            <div class="stat-label">% Self-Taught</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE ===== -->
+  <section id="timeline" class="section timeline-section" aria-label="Journey timeline">
+    <div class="container">
+      <div class="section-label" data-aos>02 / JOURNEY</div>
+      <h2 class="section-title" data-aos>The <span class="gradient-text">Timeline</span></h2>
+      <div class="timeline" role="list">
+        <div class="timeline-item" data-aos role="listitem">
+          <div class="tl-dot"></div>
+          <div class="tl-year">Age 15</div>
+          <div class="tl-card">
+            <h3>The Beginning</h3>
+            <p>Discovered HTML, CSS, and JavaScript. Fell in love with the idea that you could build anything with a text editor and a browser.</p>
+            <div class="tl-tags">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" data-aos role="listitem">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2024</div>
+          <div class="tl-card">
+            <h3>Client Projects & Mastery</h3>
+            <p>Built real websites for businesses. Mastered modern frontend frameworks and shipped production-grade projects.</p>
+            <div class="tl-tags">
+              <span>React</span><span>Next.js</span><span>TypeScript</span><span>Tailwind</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" data-aos role="listitem">
+          <div class="tl-dot highlight"></div>
+          <div class="tl-year">2025</div>
+          <div class="tl-card featured">
+            <div class="tl-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:4px"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+              FOUNDED
+            </div>
+            <h3>Payric is Born</h3>
+            <p>Founded Payric — a financial management SaaS built specifically for Nigerian small businesses. Full stack, production-ready, and solving real problems.</p>
+            <div class="tl-tags">
+              <span>TypeScript</span><span>Supabase</span><span>Paystack</span><span>Node.js</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item" data-aos role="listitem">
+          <div class="tl-dot active"></div>
+          <div class="tl-year">2026</div>
+          <div class="tl-card">
+            <div class="tl-badge pulse">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:4px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              NOW
+            </div>
+            <h3>Launch Mode</h3>
+            <p>Preparing Payric for public launch. Taking freelance projects. Exploring AI, Three.js, and the next frontier.</p>
+            <div class="tl-tags">
+              <span>Three.js</span><span>AI</span><span>SaaS Launch</span><span>Freelance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills" class="section skills-section" aria-label="Skills">
+    <div class="container">
+      <div class="section-label" data-aos>03 / SKILLS</div>
+      <h2 class="section-title" data-aos>The <span class="gradient-text">Tech Stack</span></h2>
+      <p class="section-sub" data-aos>Tools I use to build, ship, and solve.</p>
+    </div>
+    <div id="skills-universe" aria-hidden="true"></div>
+    <div class="skills-carousel" id="skillsCarousel" aria-label="Skills carousel">
+      <!-- filled by JS -->
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects" class="section projects-section" aria-label="Featured projects">
+    <div class="container">
+      <div class="section-label" data-aos>04 / PROJECTS</div>
+      <h2 class="section-title" data-aos>Featured <span class="gradient-text">Work</span></h2>
+      <p class="section-sub" data-aos>Products I've designed, built, and shipped.</p>
+      <div class="projects-grid" id="projectsGrid">
+      
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section id="testimonials" class="section testimonials-section" aria-label="Client testimonials">
+    <div class="container">
+      <div class="section-label" data-aos>05 / TESTIMONIALS</div>
+      <h2 class="section-title" data-aos>What People <span class="gradient-text">Say</span></h2>
+      <p class="section-sub" data-aos>Feedback from clients and users I've built for.</p>
+    </div>
+    <div class="testi-wrap" data-aos>
+      <div id="testimonialsCarousel" class="testi-carousel" aria-roledescription="carousel" aria-label="Client testimonials"></div>
+    </div>
+  </section>
+
+  <!-- ===== AI LAB ===== -->
+  <section id="ai-lab" class="section ai-lab-section" aria-label="AI Lab">
+    <div class="container">
+      <div class="section-label" data-aos>06 / AI LAB</div>
+      <h2 class="section-title" data-aos>The <span class="gradient-text">AI Lab</span></h2>
+      <p class="section-sub" data-aos>Experiments at the intersection of data, machine learning, and code.</p>
+      <div class="ai-skills-bar" data-aos>
+        <div class="ai-skill-item">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3776AB" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <span>Python</span>
+        </div>
+        <div class="ai-skill-item">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#150458" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h10M7 12h6M7 17h8"/></svg>
+          <span>Pandas</span>
+        </div>
+        <div class="ai-skill-item">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4DABF5" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
+          <span>NumPy</span>
+        </div>
+        <div class="ai-skill-item">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <span>Scikit-learn</span>
+        </div>
+      </div>
+      <div class="ai-cards" id="aiCards">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BLOG ===== -->
+  <section id="blog" class="section blog-section" aria-label="Developer journal">
+    <div class="container">
+      <div class="section-label" data-aos>07 / JOURNAL</div>
+      <h2 class="section-title" data-aos>Developer <span class="gradient-text">Journal</span></h2>
+      <p class="section-sub" data-aos>Thoughts on code, products, and the builder's journey.</p>
+      <div class="blog-filters" id="blogFilters" role="tablist" aria-label="Blog categories">
+        <!-- filled by JS -->
+      </div>
+      <div class="blog-grid" id="blogGrid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS ===== -->
+  <section id="stats" class="section stats-section" aria-label="Stats dashboard">
+    <div class="container">
+      <div class="section-label" data-aos>08 / STATS</div>
+      <h2 class="section-title" data-aos>By the <span class="gradient-text">Numbers</span></h2>
+      <div class="stats-dashboard">
+        <div class="stats-chart-card" data-aos>
+          <h3>Tech Stack Usage</h3>
+          <canvas id="stackChart" width="300" height="200" aria-label="Tech stack usage chart"></canvas>
+        </div>
+        <div class="stats-chart-card" data-aos>
+          <h3>Current Focus</h3>
+          <canvas id="focusChart" width="300" height="200" aria-label="Current focus areas chart"></canvas>
+        </div>
+        <div class="stats-chart-card full-width" data-aos>
+          <h3>Projects Over Time</h3>
+          <canvas id="timelineChart" width="600" height="160" aria-label="Projects over time chart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ROADMAP ===== -->
+  <section id="roadmap" class="section roadmap-section" aria-label="Roadmap">
+    <div class="container">
+      <div class="section-label" data-aos>09 / ROADMAP</div>
+      <h2 class="section-title" data-aos>What's <span class="gradient-text">Next</span></h2>
+      <div class="roadmap-grid">
+        <div class="roadmap-card" data-aos>
+          <div class="rm-year">2026</div>
+          <h3>Launch Payric</h3>
+          <ul>
+            <li>Public launch in Nigeria</li>
+            <li>Acquire first 100 paying users</li>
+            <li>Ship mobile app</li>
+            <li>Take more freelance projects</li>
+          </ul>
+          <div class="rm-status active">In Progress</div>
+        </div>
+        <div class="roadmap-card" data-aos>
+          <div class="rm-year">2027</div>
+          <h3>Scale & Expand</h3>
+          <ul>
+            <li>Build more SaaS products</li>
+            <li>Expand AI knowledge</li>
+            <li>Master Three.js</li>
+            <li>Grow Payric to 1,000+ users</li>
+          </ul>
+          <div class="rm-status upcoming">Upcoming</div>
+        </div>
+        <div class="roadmap-card long-term" data-aos>
+          <div class="rm-year">&#x221E;</div>
+          <h3>Long-Term Vision</h3>
+          <p>Build products used by millions. Create tools that make a real difference for African entrepreneurs and developers.</p>
+          <div class="rm-status dream">The Dream</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" class="section services-section" aria-label="Services">
+    <div class="container">
+      <div class="section-label" data-aos>10 / SERVICES</div>
+      <h2 class="section-title" data-aos>What I <span class="gradient-text">Build</span></h2>
+      <div class="services-grid" id="servicesGrid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section contact-section" aria-label="Contact">
+    <div class="container">
+      <div class="section-label" data-aos>11 / CONTACT</div>
+      <h2 class="section-title" data-aos>Open a <span class="gradient-text">Connection</span></h2>
+      <p class="section-sub" data-aos>Type a command to connect. The universe is listening.</p>
+      <div class="terminal-container" data-aos>
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="td red"></span>
+            <span class="td yellow"></span>
+            <span class="td green"></span>
+          </div>
+          <span class="terminal-title">julius@thejuliusdev ~ </span>
+        </div>
+        <div class="terminal-body" id="terminalBody" role="log" aria-live="polite" aria-label="Terminal output">
+          <div class="terminal-line">
+            <span class="t-prompt">julius@universe:~$</span>
+            <span class="t-text"> Welcome to TheJuliusDev Terminal v1.0.0</span>
+          </div>
+          <div class="terminal-line">
+            <span class="t-prompt">julius@universe:~$</span>
+            <span class="t-text"> Available commands: <span class="t-cmd">connect julius</span> | <span class="t-cmd">email</span> | <span class="t-cmd">github</span> | <span class="t-cmd">linkedin</span> | <span class="t-cmd">twitter</span> | <span class="t-cmd">payric</span> | <span class="t-cmd">help</span></span>
+          </div>
+          <div class="terminal-line">
+            <span class="t-prompt">julius@universe:~$</span>
+            <span class="t-text t-blink"> Type a command below
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="terminal-input-row">
+          <span class="t-prompt-inline">julius@universe:~$</span>
+          <input
+            type="text"
+            id="terminalInput"
+            class="terminal-input"
+            placeholder="connect julius"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Terminal command input"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GAME OVERLAY ===== -->
+  <div id="gameOverlay" class="game-overlay" role="dialog" aria-modal="true" aria-label="Bug Hunter Game" aria-hidden="true">
+    <div class="game-header">
+      <h2 class="game-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M8.5 8.5l-2-2M15.5 8.5l2-2M8.5 15.5l-2 2M15.5 15.5l2 2M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        BUG HUNTER
+      </h2>
+      <div class="game-hud">
+        <span>SCORE: <strong id="gameScore">0</strong></span>
+        <span>LEVEL: <strong id="gameLevel">1</strong></span>
+        <span>HP: <strong id="gameHP"></strong></span>
+      </div>
+      <button class="game-close" id="gameClose" aria-label="Close game">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <canvas id="gameCanvas" aria-label="Bug Hunter game canvas"></canvas>
+    <div class="game-controls-hint">
+      <span>WASD / Arrow Keys: Move</span>
+      <span>Space: Fire Laser</span>
+      <span>P: Pause</span>
+    </div>
+    <div id="virtualControls" class="virtual-controls" aria-hidden="true">
+      <div class="vjoystick-area" id="joystickArea">
+        <div class="vjoystick-base" id="joystickBase">
+          <div class="vjoystick-stick" id="joystickStick"></div>
+        </div>
+      </div>
+      <button class="vfire-btn" id="fireBtn" aria-label="Fire laser">FIRE</button>
+    </div>
+    <div id="gameOver" class="game-over-screen" aria-hidden="true">
+      <h3>GAME OVER</h3>
+      <div class="go-score">Score: <span id="finalScore">0</span></div>
+      <div class="go-hi">Best: <span id="hiScore">0</span></div>
+      <button id="restartBtn" class="btn btn-primary">Play Again</button>
+      <button id="closeGameBtn" class="btn btn-ghost">Exit</button>
+    </div>
+  </div>
+
+  <!-- ===== SECRET AREA ===== -->
+  <div id="secretArea" class="secret-area" role="dialog" aria-modal="true" aria-label="Secret area" aria-hidden="true">
+    <button class="secret-close" id="secretClose" aria-label="Close secret area">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="secret-content">
+      <div class="secret-header">
+        <span class="secret-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+          ACCESS GRANTED
+        </span>
+        <h2>Behind the Curtain</h2>
+        <p>sudo reveal — You found it.</p>
+      </div>
+      <div class="secret-grid">
+        <div class="secret-card">
+          <div class="sc-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3>Hidden Project: FinSight AI</h3>
+          <p>An AI-powered financial analysis tool for Payric. Currently in stealth mode. Analyzing transaction patterns to give users smart insights.</p>
+          <span class="sc-tag">Stealth</span>
+        </div>
+        <div class="secret-card">
+          <div class="sc-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Project: PanAfriSaaS</h3>
+          <p>A network connecting African SaaS founders. Peer support, shared learnings, and co-marketing for the next wave of African tech.</p>
+          <span class="sc-tag">Ideation</span>
+        </div>
+        <div class="secret-card">
+          <div class="sc-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+          </div>
+          <h3>Easter Egg: Konami Mode</h3>
+          <p>Try the Konami code on the main page. ↑↑↓↓←→←→BA. Something special awaits.</p>
+          <span class="sc-tag">Try It</span>
+        </div>
+        <div class="secret-card">
+          <div class="sc-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h3>Origin Story</h3>
+          <p>The first line of code Julius ever wrote was an HTML &lt;h1&gt; tag that said "Hello World". 6 years later, that curiosity became Payric.</p>
+          <span class="sc-tag">Story</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-tjd">TJD</span>
+          <span>TheJuliusDev</span>
+        </div>
+        <p>Built with TypeScript, Three.js &amp; GSAP</p>
+        <p class="footer-loc">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Ibadan, Nigeria
+        </p>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TheJuliusDev. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

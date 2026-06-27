@@ -1,0 +1,19 @@
+{
+  "name": "juliusverse",
+  "version": "1.0.0",
+  "description": "JuliusVerse - Portfolio of Julius Ayodeji (TheJuliusDev)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.169.0",
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "@types/three": "^0.169.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}
